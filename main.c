@@ -1,5 +1,10 @@
 #include <GL/glut.h>
 
+//binded ctrl+shift+f6 to Tasks: Run Test Task
+
+//ctrl+shift+b to build (compile and link)
+//ctrl+shift+f6 to build and run
+
 void display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);
