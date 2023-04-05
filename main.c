@@ -1,32 +1,41 @@
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 
-//binded ctrl+shift+f6 to Tasks: Run Test Task
-
-//ctrl+shift+b to build (compile and link)
-//ctrl+shift+f6 to build and run
-
-void display(void)
+void render(GLFWwindow *window)
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    
+
     glBegin(GL_POLYGON);
-        glVertex3f(0.5, 0.0, 0.5);
-        glVertex3f(0.5, 0.0, 0.0);
-        glVertex3f(0.0, 0.5, 0.0);
-        glVertex3f(0.0, 0.0, 0.5);
+    glVertex3f(0.5, 0.0, 0.5);
+    glVertex3f(0.5, 0.0, 0.0);
+    glVertex3f(0.0, 0.5, 0.0);
+    glVertex3f(0.0, 0.0, 0.5);
     glEnd();
 
-    glFlush();
+    glfwSwapBuffers(window);
 }
 
-int main(int argc, char** argv)
+int main()
 {
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_SINGLE);
-    glutInitWindowSize(400,300);
-    glutInitWindowPosition(100,100);
-    glutCreateWindow("Hello World");
-    glutDisplayFunc(display);
-    glutMainLoop();
+    if (!glfwInit())
+    {
+        return -1;
+    }
+
+    GLFWwindow *window = glfwCreateWindow(400, 300, "Hello World", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        return -1;
+    }
+
+    glfwMakeContextCurrent(window);
+
+    while (!glfwWindowShouldClose(window))
+    {
+        render(window);
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
     return 0;
 }

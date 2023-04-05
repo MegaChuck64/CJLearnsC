@@ -1,0 +1,23 @@
+# How to run in VSCode
+---
+- I binded ctrl+shift+f6 to Tasks: Run Test Task
+    - Open command palette, search Task: Run Test Task
+    - Select gear 'settings' icon
+    - Set binding to what ever you want
+    - Will run compile and launch
+- Default 'Build' command is ctrl+shift+b
+    - This will run gcc compile and link only, won't run    
+
+- Install GLFW and other OpenGL libs (on ubuntu)
+    - sudo apt-get update
+    - sudo apt-get install cmake pkg-config
+    - sudo apt-get install mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
+    - sudo apt-get install libglew-dev libglfw3-dev libglm-dev
+    - sudo apt-get install libao-dev libmpg123-dev
+    - 
+    - sudo cd /usr/local/lib/
+    - sudo git clone https://github.com/glfw/glfw.git
+    - sudo cd glfw
+    - sudo cmake .
+    - sudo make
+    - sudo make install
