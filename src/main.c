@@ -1,5 +1,14 @@
 #include <GLFW/glfw3.h>
 
+
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    {
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    }
+}
+
 void render(GLFWwindow *window)
 {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -29,6 +38,7 @@ int main()
     }
 
     glfwMakeContextCurrent(window);
+    glfwSetKeyCallback(window, key_callback);
 
     while (!glfwWindowShouldClose(window))
     {

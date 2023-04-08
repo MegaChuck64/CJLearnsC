@@ -6,7 +6,7 @@
         {
             "label": "Compile",
             "type": "shell",
-            "command": "gcc src/main.c -o output/main -lGL -lglfw",//-lGLU -lglut",
+            "command": "gcc src/*.c -o output/app -lGL -lglfw",//-lGLU -lglut",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -16,7 +16,7 @@
         {
             "label": "Run",
             "type": "shell",
-            "command": "./output/main",
+            "command": "./output/app",
             "dependsOn": "Compile",
             "problemMatcher": [],
             "group": {
