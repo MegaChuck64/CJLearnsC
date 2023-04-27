@@ -21,7 +21,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 
 int main()
 {
-    #ifdef __linux_
+    #ifdef __linux__
 
     Display *display;
     Window window;
