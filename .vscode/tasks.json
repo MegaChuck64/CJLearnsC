@@ -6,7 +6,7 @@
         {
             "label": "Compile",
             "type": "shell",
-            "command": "gcc src/*.c -o output/app -lGL -lglfw",//-lGLU -lglut",
+            "command": "gcc src/*.c -o output/app -lX11",//-lGLU -lglut",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
