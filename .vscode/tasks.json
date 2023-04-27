@@ -1,22 +1,19 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
             "label": "Compile",
             "type": "shell",
-            "command": "gcc src/*.c -o output/app -lX11",//-lGLU -lglut",
+            "windows": { "command" : "cl /c /EHsc /W4 /nologo ${fileDirname}\\main.c"},
+            "linux": { "command" : "gcc src/*.c -o output/app -lX11"},
             "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build"
         },
         {
             "label": "Run",
             "type": "shell",
-            "command": "./output/app",
+            "windows": { "command" : "link main.obj user32.lib kernel32.lib /SUBSYSTEM:WINDOWS /ENTRY:WinMainCRTStartup /nologo; .\\main.exe"}, 
+            "linux" : { "command" : "./output/app"},            
             "dependsOn": "Compile",
             "problemMatcher": [],
             "group": {
