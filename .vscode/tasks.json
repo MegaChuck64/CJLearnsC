@@ -12,7 +12,7 @@
         {
             "label": "Run",
             "type": "shell",
-            "windows": { "command" : "link main.obj user32.lib kernel32.lib /SUBSYSTEM:WINDOWS /ENTRY:WinMainCRTStartup /nologo; .\\main.exe"}, 
+            "windows": { "command" : "link main.obj user32.lib kernel32.lib gdi32.lib /SUBSYSTEM:WINDOWS /ENTRY:WinMainCRTStartup /nologo; .\\main.exe"}, 
             "linux" : { "command" : "./output/app"},            
             "dependsOn": "Compile",
             "problemMatcher": [],

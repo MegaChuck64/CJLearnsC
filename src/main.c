@@ -48,59 +48,77 @@ int main()
 #elif _WIN32
 
 #include <windows.h>
+#include <stdio.h>
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-    // Declare variables
-    HWND hwnd;
-    MSG msg;
-    WNDCLASS wc = {0};
+    const char CLASS_NAME[] = "Window Class";
+    const char WINDOW_NAME[] = "Sample Window";
 
-    // Register the window class
+    WNDCLASS wc = {0};
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = hInstance;
-    wc.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
-    wc.lpszClassName = "MyWindowClass";
+    wc.lpszClassName = CLASS_NAME;
+    wc.hbrBackground = (HBRUSH)(COLOR_WINDOW);
+
     RegisterClass(&wc);
 
-    // Create the window
-    hwnd = CreateWindow(
-        "MyWindowClass", "My Window",
-        WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT,
-        500, 300,
-        NULL, NULL,
-        hInstance, NULL);
+    HWND hwnd = CreateWindowEx(
+        0,
+        CLASS_NAME,
+        WINDOW_NAME,
+        WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+        NULL,
+        NULL,
+        hInstance,
+        NULL);
 
-    // Show the window
-    ShowWindow(hwnd, nCmdShow);
-
-    // Enter the message loop
-    while(GetMessage(&msg, NULL, 0, 0))
+    MSG msg;
+    while (GetMessage(&msg, NULL, 0, 0))
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
 
-    // Return the exit code
-    return (int)msg.wParam;
+    return 0;
 }
 
-// Define the window procedure
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    switch(uMsg)
+    switch (uMsg)
     {
+         case WM_CREATE:
+            // Force a WM_PAINT message by invalidating the entire client area
+            InvalidateRect(hwnd, NULL, TRUE);
+        return 0;
         case WM_DESTROY:
             PostQuitMessage(0);
             return 0;
-        default:
+        case WM_PAINT:
+        {
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hwnd, &ps);
+            RECT rect;
+            GetClientRect(hwnd, &rect);
+            SetTextColor(hdc, RGB(255, 0, 0)); 
+            SetBkColor(hdc, RGB(255, 255, 255));
+            RECT squareRect = {20, 20, 40, 40};
+            RECT textRect = {20,60,100,50};
+            DrawText(hdc, "Hello, world!", -1, &textRect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+            HBRUSH blackBrush = CreateSolidBrush(RGB(0, 0, 0));
+            FillRect(hdc, &squareRect, blackBrush);
+            DeleteObject(blackBrush);
+            EndPaint(hwnd, &ps);
+            return 0;
+        }
+        default: 
             return DefWindowProc(hwnd, uMsg, wParam, lParam);
     }
 }
-
 
 #endif
 
